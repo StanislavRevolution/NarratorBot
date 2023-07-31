@@ -13,17 +13,20 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
-    new_keyboard = InlineKeyboardMarkup()
-    bu1 = InlineKeyboardButton('Фотки', callback_data='my_photos')
-    bu2 = InlineKeyboardButton('Хобби', callback_data='my_hobbies')
-    bu3 = InlineKeyboardButton('Голосовые', callback_data='my_voices')
-    new_keyboard.add(bu1, bu2, bu3)
+    print(message)
+    print(message.from_user.first_name)
+    kb = InlineKeyboardMarkup()
+    b1 = InlineKeyboardButton('Фотки', callback_data='my_photos')
+    b2 = InlineKeyboardButton('Хобби', callback_data='my_hobbies')
+    b3 = InlineKeyboardButton('Голосовые', callback_data='my_voices')
+    b4 = InlineKeyboardButton('GitHub', callback_data='github')
+    kb.add(b1, b2, b3, b4)
     with open(STICKER_FILE, 'rb') as sticker_file:
         await bot.send_sticker(message.chat.id, sticker_file) #config
     await bot.send_message(
         message.chat.id,
         text_responses.welcome,
-        reply_markup=new_keyboard
+        reply_markup=kb
     )
 
 
@@ -90,8 +93,8 @@ async def handle_back_button(call: types.CallbackQuery):
 
 @dp.callback_query_handler(text="my_hobbies")
 async def handle_school_photo(call: types.CallbackQuery):
-    b3 = InlineKeyboardButton('Назад', callback_data='back')
-    kb = InlineKeyboardMarkup().add(b3)
+    b1 = InlineKeyboardButton('Назад', callback_data='back')
+    kb = InlineKeyboardMarkup().add(b1)
     await bot.edit_message_text(
         text_responses.about_hobby,
         call.message.chat.id, message_id=call.message.message_id, reply_markup=kb
@@ -101,16 +104,17 @@ async def handle_school_photo(call: types.CallbackQuery):
 
 @dp.callback_query_handler(text="back")
 async def handle_last_photo(call: types.CallbackQuery):
-    new_keyboard = InlineKeyboardMarkup()
-    bu1 = InlineKeyboardButton('Фотки', callback_data='my_photos')
-    bu2 = InlineKeyboardButton('Хобби', callback_data='my_hobbies')
-    bu3 = InlineKeyboardButton('Голосовые', callback_data='my_voices')
-    new_keyboard.add(bu1, bu2, bu3)
+    kb = InlineKeyboardMarkup()
+    b1 = InlineKeyboardButton('Фотки', callback_data='my_photos')
+    b2 = InlineKeyboardButton('Хобби', callback_data='my_hobbies')
+    b3 = InlineKeyboardButton('Голосовые', callback_data='my_voices')
+    b4 = InlineKeyboardButton('GitHub', callback_data='github')
+    kb.add(b1, b2, b3, b4)
     await bot.edit_message_text(
         text_responses.main_process_text,
         call.message.chat.id,
         call.message.message_id,
-        reply_markup=new_keyboard
+        reply_markup=kb
     )
     await call.answer()
 
@@ -123,6 +127,15 @@ async def handle_school_photo(call: types.CallbackQuery):
     b4 = InlineKeyboardButton('Назад', callback_data='back')
     kb = InlineKeyboardMarkup().add(b1, b2, b3, b4)
     await bot.edit_message_reply_markup(call.message.chat.id, call.message.message_id, reply_markup=kb)
+    await call.answer()
+
+
+@dp.callback_query_handler(text="github")
+async def handle_school_photo(call: types.CallbackQuery):
+    kb = InlineKeyboardMarkup()
+    b1 = InlineKeyboardButton('Удалить сообщение', callback_data='delete_last_message')
+    kb.add(b1)
+    await bot.send_message(call.message.chat.id, text_responses.github, reply_markup=kb)
     await call.answer()
 
 

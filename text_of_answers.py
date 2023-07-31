@@ -1,7 +1,7 @@
 from collections import namedtuple
 
 
-RESPONSES_TYPES = ('welcome', 'about_hobby', 'main_process_text')
+RESPONSES_TYPES = ('welcome', 'about_hobby', 'main_process_text', 'github')
 
 PlainAnswers = namedtuple('PlainAnswers', RESPONSES_TYPES)
 
@@ -30,6 +30,7 @@ text_responses = PlainAnswers(
                 "работа и обмен идеями помогают нам учиться друг у друга и расти профессионально.\n\n"
                 "В целом, программирование - это не только мое хобби, но и страсть, которая "
                 "позволяет мне творить и вносить положительные изменения в мир через технологии.",
-    main_process_text='Снизу ты видишь кнопки, не стесняйся, нажимай!'
+    main_process_text='Снизу ты видишь кнопки, не стесняйся, нажимай!',
+    github='https://github.com/StanislavRevolution/NarratorBot'
     )
 
