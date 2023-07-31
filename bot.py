@@ -13,8 +13,6 @@ dp = Dispatcher(bot)
 
 @dp.message_handler(commands=['start'])
 async def process_start_command(message: types.Message):
-    print(message)
-    print(message.from_user.first_name)
     kb = InlineKeyboardMarkup()
     b1 = InlineKeyboardButton('Фотки', callback_data='my_photos')
     b2 = InlineKeyboardButton('Хобби', callback_data='my_hobbies')
